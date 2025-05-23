@@ -1,11 +1,23 @@
 # Summer-glove
 
 [![npm version](https://img.shields.io/npm/v/npm-package.svg?style=flat)](https://www.npmjs.com/package/express-swagger-autoconfigure)
-## ▬▬▬▬▬▬▬▬▬Fit like a glove▬▬▬▬▬▬▬▬▬
+##  Fit like a glove 🧤
 Summer-glove is a route manager, providing a quick and easy way to configure an express application. Summer-glove also provides 100% automated and customizable swagger documentation.
 ## Installation and Usage
 ```jsx
 npm i summer-glove
+```
+## To create a app
+```jsx
+npx summer-glove --create-app
+```
+Will be create 
+```
+project/
+├── App.ts
+├── Controller.ts
+├── Server.ts
+├── tsconfig.json
 ```
 Add the property below to your file **tsconfig.json**.
 ```json
