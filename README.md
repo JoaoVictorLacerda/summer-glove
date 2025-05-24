@@ -1,6 +1,6 @@
 # Summer-glove
 
-[![npm version](https://img.shields.io/npm/v/npm-package.svg?style=flat)](https://www.npmjs.com/package/express-swagger-autoconfigure)
+[![npm version](https://img.shields.io/npm/v/npm-package.svg?style=flat)](https://www.npmjs.com/package/summer-glove)
 ##  Fit like a glove 🧤
 Summer-glove is a route manager, providing a quick and easy way to configure an express application. Summer-glove also provides 100% automated and customizable swagger documentation.
 ## Installation and Usage

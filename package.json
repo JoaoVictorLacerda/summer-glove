@@ -1,6 +1,6 @@
 {
   "name": "summer-glove",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "author": "João Victor Lacerda de Queiroz",
   "license": "MIT",
   "main": "dist/index.js",
@@ -11,6 +11,20 @@
   "bin": {
     "summer-glove": "./cli/bin.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JoaoVictorLacerda/summer-glove"
+  },
+  "keywords": [
+    "API",
+    "summer",
+    "glove",
+    "swagger",
+    "express"
+  ],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.4",

@@ -19,7 +19,8 @@
   "include": [
     "src/**/*",
     "themesIMG/**/*",
-    "cli/**/*"
+    "cli/**/*",
+    "public/**/*"
   ],
   "exclude": [
     "dev/**/*"
