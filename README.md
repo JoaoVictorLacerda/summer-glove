@@ -102,6 +102,7 @@ import {
   Version
 } from "../src/index";
 import MyController from "./Controller";
+import express from "express";
 
 @SwaggerInitializer
 @SwaggerEndpoint("/doc") //
@@ -114,7 +115,7 @@ import MyController from "./Controller";
 export default class App {
 
   @ExpressInitializer(LoggerConfigTypes.SHOW)
-  private app: Express.Express;
+  private app: Express.Express = express();
 
   constructor () {
     this.initControllers();
