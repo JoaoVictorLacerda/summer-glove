@@ -1,4 +1,4 @@
-import Express from "express";
+import Express, {json} from "express";
 import {
     ApiDefaultPath,
     Description,
@@ -14,8 +14,6 @@ import {
     Version
 } from "../src/index";
 import MyController from "./Controller";
-import express from "express";
-
 @SwaggerInitializer
 @SwaggerEndpoint("/doc")
 @Description("API TEST")
@@ -26,13 +24,14 @@ import express from "express";
 @Theme(ThemesType.NEWS_PAPER)
 export default class App {
 
-    @ExpressInitializer(LoggerConfigTypes.SHOW)
-    private app: Express.Express = express();
+    @ExpressInitializer(LoggerConfigTypes.SHOW,
+        json()
+    )
+    private app: Express.Express;
 
     constructor () {
         this.initControllers();
     }
-
     private initControllers(){
         new MyController()
     }

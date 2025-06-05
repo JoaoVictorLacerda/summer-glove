@@ -15,16 +15,24 @@ type EndpointConfig = {
     middleware?: any
 }
 
-export default function ExpressInitializer(loggerConfigTypes?: LoggerConfigTypes) {
+export default function ExpressInitializer(loggerConfigTypes: LoggerConfigTypes, ...appUse:any) {
 
     if (loggerConfigTypes !== undefined) {
         LoggerInformationCore.getInstance().getObjectConfig()["showLog"] = loggerConfigTypes === LoggerConfigTypes.SHOW
     }
+    ExpressInformationCore.getInstance().getObjectConfig().appUse["config"] = appUse
+
     return function (target: any, propertyKey: string) {
         const rotes: any = ExpressInformationCore.getInstance().getObjectConfig().mappedApi;
-
+        const configuration = ExpressInformationCore.getInstance().getObjectConfig().appUse
         const app = express();
-        app.use(json());
+        if((configuration && configuration.config) && configuration.config.length > 0) {
+            configuration.config.map((item:any) => {
+                app.use(item)
+            })
+        }else {
+            app.use(json());
+        }
 
         Object.keys(rotes).forEach((key: any) => {
             const expressRoutes = Router();

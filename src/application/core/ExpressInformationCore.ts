@@ -16,16 +16,20 @@ export default class ExpressInformationCore implements Core {
 
     private mappedApi: any = {}
     private controllers: any = {}
+    private appUse: any = {}
 
     public getObjectConfig(): any {
         return {
             mappedApi: this.mappedApi,
-            controllers: this.controllers
+            controllers: this.controllers,
+            appUse: this.appUse
         };
     }
 
     cleanObjects(): void {
         this.mappedApi = {}
+        this.appUse = {}
+        this.controllers = {}
     }
 
 }

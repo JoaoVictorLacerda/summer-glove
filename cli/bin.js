@@ -26,24 +26,23 @@ function createApp() {
     const tsconfigPath = path.join(projectPath, "tsconfig.json");
 
     fs.writeFileSync(appPath, `
-import Express from "express";
+import Express, {json} from "express";
 import {
-    ApiDefaultPath,
-    Description,
-    ExpressInitializer,
-    GlobalAuth,
-    AuthType,
-    LoggerConfigTypes,
-    SwaggerEndpoint,
-    SwaggerInitializer,
-    Theme,
-    ThemesType,
-    Title,
-    Version
+  ApiDefaultPath,
+  Description,
+  ExpressInitializer,
+  GlobalAuth,
+  AuthType,
+  LoggerConfigTypes,
+  SwaggerEndpoint,
+  SwaggerInitializer,
+  Theme,
+  ThemesType,
+  Title,
+  Version
 } from "summer-glove";
 import MyController from "./Controller";
-import express from "express";
-
+import cors from "cors";
 @SwaggerInitializer
 @SwaggerEndpoint("/doc")
 @Description("API TEST")
@@ -54,21 +53,24 @@ import express from "express";
 @Theme(ThemesType.NEWS_PAPER)
 export default class App {
 
-    @ExpressInitializer(LoggerConfigTypes.SHOW)
-    private app: Express.Express = express();
+  @ExpressInitializer(LoggerConfigTypes.SHOW,
+          cors(), // configuration applied in app.use()
+          json() //configuration applied in app.use()
+  )
+  private app: Express.Express;
 
-    constructor () {
-        this.initControllers();
-    }
+  constructor () {
+    this.initControllers();
+  }
+  private initControllers(){
+    new MyController()
+  }
 
-    private initControllers(){
-        new MyController()
-    }
-
-    public getApp(): Express.Express {
-        return this.app;
-    }
-}`);
+  public getApp(): Express.Express {
+    return this.app;
+  }
+}
+    `);
 
     fs.writeFileSync(controllerPath, `
 import { Request, Response } from "express";

@@ -45,8 +45,12 @@ Below is a walkthrough of all available decorators
     * AuthType.BASIC
 * **@ExpressInitializer** - Initializes an express app and configures its routes. You can also pass a logger configuration
   * Param:
-    * LoggerConfigTypes.SHOW
-    * LoggerConfigTypes.HIDE
+    * LoggerConfigTypes.SHOW | LoggerConfigTypes.HIDE
+    * app configuration:
+      * Everything you want to pass to your express app. Example:
+        * app.use( json() )
+        * app.use( cors() )
+      * Default configuration: app.use( json() )
 
 ### Second Configuration
 * **@Controller** - Specifies a controller within the express context | String
@@ -86,7 +90,7 @@ To configure the themes, use
 
 ### Express & Swagger Configuration
 ```javascript
-import Express from "express";
+import Express, {json} from "express";
 import {
   ApiDefaultPath,
   Description,
@@ -102,10 +106,10 @@ import {
   Version
 } from "../src/index";
 import MyController from "./Controller";
-import express from "express";
-
+import cors from "cors";
+import rateLimit from "express-rate-limit";
 @SwaggerInitializer
-@SwaggerEndpoint("/doc") //
+@SwaggerEndpoint("/doc")
 @Description("API TEST")
 @Title("TEST NAME")
 @Version("1.0.0")
@@ -114,16 +118,24 @@ import express from "express";
 @Theme(ThemesType.NEWS_PAPER)
 export default class App {
 
-  @ExpressInitializer(LoggerConfigTypes.SHOW)
-  private app: Express.Express = express();
+  @ExpressInitializer(LoggerConfigTypes.SHOW,
+          cors(), // configuration applied in app.use()
+          rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 10,
+            message: 'Too many requests from this IP. Please try again later.',
+            standardHeaders: true,
+            legacyHeaders: false,
+          }), //configuration applied in app.use()
+          json() //configuration applied in app.use()
+  )
+  private app: Express.Express;
 
   constructor () {
     this.initControllers();
   }
-
   private initControllers(){
-    new MyController1()
-    new MyController2()
+    new MyController()
   }
 
   public getApp(): Express.Express {
