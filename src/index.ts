@@ -8,7 +8,13 @@ export { default as Connect }from "./interfaces/summer/httpMethods/Connect";
 export { default as Head }from "./interfaces/summer/httpMethods/Head";
 export { default as Options }from "./interfaces/summer/httpMethods/Options";
 export { default as Trace }from "./interfaces/summer/httpMethods/Trace";
-export { default as Controller }from "./interfaces/summer/Controller";
+export { default as Component }from "./interfaces/summer/ecosystem/Component";
+export { default as Injectable }from "./interfaces/summer/ecosystem/Injectable";
+export { default as Repository }from "./interfaces/summer/ecosystem/Repository";
+export { default as Service }from "./interfaces/summer/ecosystem/Service";
+export { default as Configuration }from "./interfaces/summer/ecosystem/Configuration";
+export { default as StartControllers }from "./interfaces/summer/ecosystem/StartControllers";
+export { default as Controller }from "./interfaces/summer/ecosystem/Controller";
 export { LoggerConfigTypes } from "./interfaces/types/LoggerConfigTypes"
 
 //EXPRESS CONFIGURATION

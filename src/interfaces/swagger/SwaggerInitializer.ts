@@ -14,10 +14,8 @@ export default function SwaggerInitializer(target: Function) {
 
     app.use(SwaggerInformationCore.getInstance().getObjectConfig().swaggerEndpoint, swaggerUi.serve, swaggerSetup);
 
-
-    SwaggerInformationCore.getInstance().cleanObjects()
-    ExpressInformationCore.getInstance().cleanObjects()
-
+    SwaggerInformationCore.getInstance().cleanObjects();
+    ExpressInformationCore.getInstance().cleanObjects();
 }
 
 function configRoutes(paths: any) {
