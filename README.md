@@ -32,11 +32,21 @@ Add the property below to your file **tsconfig.json**.
 ## Documentation
 Below is a walkthrough of all available decorators
 
+### Dependence inject Configuration:
+Decorate your classes with these so that summer can manage the injection of your dependencies.  
+All context decorators (@Repository, @Service, @Component, @Configuration) receive an optional parameter. This parameter is used to allocate the instantiated object in the summer context; if not specified, it will be obtained from the class.
+* **@Repository** - Responsible for managing repository classes | String
+* **@Service** - Responsible for managing services classes | String
+* **@Component** - Responsible for managing components classes | String
+* **@Configuration** - Responsible for managing configurations classes | String
+* **@Injectable** - Responsible for injecting the object without attribute | String
+
 ### Frist Configuration:
+* **@StartControllers** - Receives all the controllers of the application to initialize in the summer context  | Object []
 * **@SwaggerInitializer** - Loads Swagger in your express application  | String
 * **@SwaggerEndpoint** - Defines the path to access documentation | String
 * **@ApiDefaultPath** - Defines the main path of your API | String
-* **@Description** - Describes your application within documenta*tion | String
+* **@Description** - Describes your application within documentation | String
 * **@Title** - Puts a title on your documentation | String
 * **@Version** - Defines API version | String
 * **@GlobalAuth** - Defines if the API uses JWT Tokens as a security mechanism | Boolean
@@ -103,8 +113,9 @@ import {
   Theme,
   ThemesType,
   Title,
-  Version
-} from "../src/index";
+  Version,
+  StartControllers
+} from "summer-glove";
 import MyController from "./Controller";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
@@ -116,6 +127,10 @@ import rateLimit from "express-rate-limit";
 @ApiDefaultPath("/")
 @GlobalAuth(AuthType.BEARER_JWT)
 @Theme(ThemesType.NEWS_PAPER)
+@StartControllers(
+    MyController1,
+    MyController2
+)
 export default class App {
 
   @ExpressInitializer(LoggerConfigTypes.SHOW,
@@ -130,14 +145,7 @@ export default class App {
           json() //configuration applied in app.use()
   )
   private app: Express.Express;
-
-  constructor () {
-    this.initControllers();
-  }
-  private initControllers(){
-    new MyController()
-  }
-
+  
   public getApp(): Express.Express {
     return this.app;
   }
@@ -163,24 +171,39 @@ export default class MyController1 {
 @Controller("/controller2")
 export default class MyController2 {
     
+    //There are 3 ways to inject a dependency into the summer-glove, here they are:
     
-    @StatusResponse(202) // if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400) // if you dont pass description, express-swagger-autoconfigure add for you 
+    @Injectable()
+    private myService: MyService
+
+    @Injectable("myService")
+    private myService2: MyService
+  
+    private myService3: MyService = new MyService();
+    
+    private myService4: MyService;
+    
+    constructor(){
+        this.myService4 = new MyService()
+    }
+    
+    @StatusResponse(202) // if you dont pass description, summer-glove add for you 
+    @StatusResponse(400) // if you dont pass description, summer-glove add for you 
     @Body({email:"Description", password:"Description"})
     @Post("/login")// It is important to put the Http Method Decorator as the first configuration.
     public login( request: Request, response: Response): Promise<Response> {
        //... implementation
     }
     
-    @StatusResponse(200) // if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200) // if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @Get("/", authorizationMiddleware)// It is important to put the Http Method Decorator as the first configuration.
     public read(request: Request, response: Response): Promise<Response> {
         //... implementation
     }
 
-    @StatusResponse(200)// if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @ParamPath({uuid: "Description"})
     @RequireAuth() // Tells swagger that the route is protected by authentication
     @Get("/find-by-uuid/{uuid}", authorizationMiddleware)// It is important to put the Http Method Decorator as the first configuration.
@@ -188,8 +211,8 @@ export default class MyController2 {
         //... implementation
     }
 
-    @StatusResponse(200)// if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @Body({
         name : "Description",
         email : "Description",
@@ -201,8 +224,8 @@ export default class MyController2 {
         //... implementation
     }
     
-    @StatusResponse(200)// if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @Query({
         uuid:"Description"
     })
@@ -212,8 +235,8 @@ export default class MyController2 {
         //... implementation
     }
 
-    @StatusResponse(200)// if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @Header({
         profileType:"Description"
     })
@@ -223,8 +246,8 @@ export default class MyController2 {
         //... implementation
     }
 
-    @StatusResponse(200)// if you dont pass description, express-swagger-autoconfigure add for you 
-    @StatusResponse(400)// if you dont pass description, express-swagger-autoconfigure add for you 
+    @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+    @StatusResponse(400)// if you dont pass description, summer-glove add for you 
     @FormData({
         img: FormDataTypes.FILE,
         name: FormDataTypes.STRING,
@@ -238,6 +261,16 @@ export default class MyController2 {
     public createProfile(request: Request, response: Response): Promise<Response> {
         //... implementation
     }
+}
+```
+```javascript
+@Service()
+export default class MyService {
+    
+    public doAnithing(): Promise<void> {
+       //... implementation
+    }
+    
 }
 ```
 
