@@ -10,7 +10,6 @@ export default function Post(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "POST", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("POST", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressPostService, middleware)
-
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressPostService, middleware)
     }
 }

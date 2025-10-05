@@ -12,8 +12,10 @@ if (command === "--create-app") {
 function createApp() {
     const { execSync } = require('child_process');
     const fs = require("fs");
-
+    console.log("summer-glove: installing the required libs...");
     execSync('npm install express@5.1.0');
+    execSync('npm install cors@2.8.5');
+    execSync('npm install -D @types/cors@2.8.18');
     execSync('npm install -D @types/express@4.17.14');
     execSync('npm install -D typescript@4.9.4');
     execSync('npm install -D ts-node-dev@2.0.0');
@@ -25,6 +27,7 @@ function createApp() {
     const serverPath = path.join(projectPath, "Server.ts");
     const tsconfigPath = path.join(projectPath, "tsconfig.json");
 
+    console.log("summer-glove: build files...");
     fs.writeFileSync(appPath, `
 import Express, {json} from "express";
 import {
@@ -39,7 +42,8 @@ import {
   Theme,
   ThemesType,
   Title,
-  Version
+  Version,
+  StartControllers
 } from "summer-glove";
 import MyController from "./Controller";
 import cors from "cors";
@@ -51,6 +55,9 @@ import cors from "cors";
 @ApiDefaultPath("/")
 @GlobalAuth(AuthType.BEARER_JWT)
 @Theme(ThemesType.NEWS_PAPER)
+@StartControllers(
+    MyController
+)
 export default class App {
 
   @ExpressInitializer(LoggerConfigTypes.SHOW,
@@ -58,13 +65,6 @@ export default class App {
           json() //configuration applied in app.use()
   )
   private app: Express.Express;
-
-  constructor () {
-    this.initControllers();
-  }
-  private initControllers(){
-    new MyController()
-  }
 
   public getApp(): Express.Express {
     return this.app;

@@ -14,6 +14,7 @@ import {
     Version
 } from "../src/index";
 import MyController from "./Controller";
+import StartControllers from "../src/interfaces/summer/ecosystem/StartControllers";
 @SwaggerInitializer
 @SwaggerEndpoint("/doc")
 @Description("API TEST")
@@ -22,6 +23,9 @@ import MyController from "./Controller";
 @ApiDefaultPath("/")
 @GlobalAuth(AuthType.BEARER_JWT)
 @Theme(ThemesType.NEWS_PAPER)
+@StartControllers(
+    MyController
+)
 export default class App {
 
     @ExpressInitializer(LoggerConfigTypes.SHOW,
@@ -29,12 +33,6 @@ export default class App {
     )
     private app: Express.Express;
 
-    constructor () {
-        this.initControllers();
-    }
-    private initControllers(){
-        new MyController()
-    }
 
     public getApp(): Express.Express {
         return this.app;

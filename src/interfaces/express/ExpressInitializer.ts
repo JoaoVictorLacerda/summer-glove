@@ -3,6 +3,8 @@ import {printError, printInfo} from "../../application/util/loggerUtil";
 import ExpressInformationCore from "../../application/core/ExpressInformationCore";
 import {LoggerConfigTypes} from "../types/LoggerConfigTypes";
 import LoggerInformationCore from "../../application/core/LoggerInformationCore";
+import SwaggerInformationCore from "../../application/core/SwaggerInformationCore";
+import DependenceInject from "../../application/core/DependenceInject";
 
 type RouteConfig = {
     expressRoutes: any,
@@ -45,6 +47,7 @@ export default function ExpressInitializer(loggerConfigTypes: LoggerConfigTypes,
                         httpMethodAndRoute[1] = httpMethodAndRoute[1].replace(/{/g, ":").replace(/}/g, "");
 
                         const callback = rotes[key][key2].function;
+                        const context = rotes[key][key2].context;
                         const middleware = rotes[key][key2].middleware;
 
                         const routeConfig: RouteConfig = {
@@ -54,7 +57,7 @@ export default function ExpressInitializer(loggerConfigTypes: LoggerConfigTypes,
 
                         const endpointConfig: EndpointConfig = {
                             endpoint: httpMethodAndRoute[1],
-                            callback: callback,
+                            callback: callback.bind(context),
                             middleware: middleware
                         };
 
@@ -79,6 +82,9 @@ export default function ExpressInitializer(loggerConfigTypes: LoggerConfigTypes,
         rotes["app"] = app;
         target[propertyKey] = app;
         LoggerInformationCore.getInstance().showLogs()
+
+        LoggerInformationCore.getInstance().cleanObjects();
+        DependenceInject.getInstance().cleanObjects();
     };
 
 }
