@@ -11,6 +11,6 @@ export default function Delete(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "DELETE", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("DELETE", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressDeleteService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressDeleteService, middleware)
     }
 }

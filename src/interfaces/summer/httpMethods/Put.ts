@@ -10,7 +10,7 @@ export default function Put(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "PUT", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("PUT", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressPutService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressPutService, middleware)
 
     }
 }

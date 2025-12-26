@@ -10,7 +10,7 @@ export default function Patch(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "PATCH", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("PATCH", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressPatchService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressPatchService, middleware)
 
     }
 }

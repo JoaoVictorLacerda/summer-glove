@@ -10,7 +10,7 @@ export default function Get(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "GET", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("GET", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressGetService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressGetService, middleware)
 
     }
 }
