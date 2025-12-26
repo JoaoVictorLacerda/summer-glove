@@ -11,7 +11,7 @@ export default function Head(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "HEAD", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("HEAD", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressHeadService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressHeadService, middleware)
 
     }
 }

@@ -11,7 +11,7 @@ export default function Trace(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "TRACE", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("TRACE", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressTraceService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressTraceService, middleware)
 
     }
 }

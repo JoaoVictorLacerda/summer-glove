@@ -11,7 +11,7 @@ export default function Options(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "OPTIONS", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("OPTIONS", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressOptionsService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressOptionsService, middleware)
 
     }
 }

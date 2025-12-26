@@ -11,7 +11,7 @@ export default function Connect(endpoint: string = "/", ...middleware: any) {
         initCore(target.constructor.name)
         verifyRouteConflicts(endpoint, "CONNECT", target.constructor.name)
         configureDescriptorAndSwaggerEndpoint("CONNECT", target.constructor.name, endpoint, descriptor)
-        configureExpressMethod(endpoint, target, descriptor, ExpressConnectService, middleware)
+        configureExpressMethod(endpoint, new target.constructor(), descriptor, ExpressConnectService, middleware)
 
     }
 }
