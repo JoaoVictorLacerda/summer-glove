@@ -31,7 +31,8 @@ function configRoutes(paths: any) {
                 const controllerName = mappedApi[key].endpoint.replace("/", "-").toUpperCase();
                 const statusRequest = mappedApi[key][key2].status
                 const controller = mappedApi[key][key2];
-                const doc = buildObjectPath(security, controllerName, statusRequest, controller);
+                const endpointString = `${key} - ${endpoint.toUpperCase()} ${mappedApi[key].endpoint + key2.split(" ")[1]}`;
+                const doc = buildObjectPath(security, controllerName, statusRequest, controller, endpointString);
 
                 if (!paths[mappedApi[key].endpoint + key2.split(" ")[1]]) {
                     paths[mappedApi[key].endpoint + key2.split(" ")[1]] = {}

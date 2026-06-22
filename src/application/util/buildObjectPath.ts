@@ -3,19 +3,21 @@ import makeParamsDoc from "./makeParamsDoc";
 import makeFormDataDoc from "./makeFormDataDoc";
 import makeQueryDoc from "./makeQueryDoc";
 import makeHeaderDoc from "./makeHeaderDoc";
+import makeFormDataV2Doc from "./makeFormDataV2Doc";
 
 
 export default function buildObjectPath(
     security: any,
     controllerName: string,
     status: string[],
-    controller: any
+    controller: any,
+    endpointString: string
 ): any {
 
     const securityResult = setSecurity(controller, security);
     const body: any = isBody(controller)
     const param: any = isParamPath(controller);
-    const form: any = isFormData(controller);
+    const form: any = isFormData(controller, endpointString);
     const query: any = isQuery(controller);
     const header: any = isHeader(controller);
     return {
@@ -61,10 +63,18 @@ function isParamPath(controller: any) {
     return paramResult;
 }
 
-function isFormData(controller: any) {
+function isFormData(controller: any, endpointString: string) {
     let formDataResult = {}
+    let isToLogWarning = false;
     if (controller.formData) {
         formDataResult = makeFormDataDoc(controller.formData);
+        isToLogWarning=true;
+    }
+    if(controller.formDataV2){
+        if(isToLogWarning){
+            console.log(`WARN: There are two versions of formData mappings for the same endpoint. endpoint: ${endpointString}`,"level: WARN")
+        }
+        formDataResult = makeFormDataV2Doc(controller.formDataV2);
     }
     return formDataResult;
 }

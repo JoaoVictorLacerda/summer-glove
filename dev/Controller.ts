@@ -1,13 +1,10 @@
-import {Request, response, Response} from "express";
-import {
-    Controller,
-    Body,
-    StatusResponse,
-    Post,
-    Injectable
-} from "../src/index";
+import {Request, Response} from "express";
+import {Controller, FormDataTypes, StatusResponse} from "../src/index";
 import {Patch} from "../src";
+import FormDataV2 from "../src/interfaces/swagger/httpRequest/FormDataV2";
+import multer from "multer";
 
+const photo = multer()
 
 @Controller("/summer-glove")
 export default class MyController {
@@ -15,10 +12,17 @@ export default class MyController {
 
     @StatusResponse(200)
     @StatusResponse(400)
-    @Body({email:"string", password:"string"})
-    @Patch("/")
-    public async Hello(request: Request, response: Response): Promise<Response> {
+    @FormDataV2({
+        dev: {
+            type: FormDataTypes.STRING,
+        },
+        img: {
+            type: FormDataTypes.FILE,
+        }
+    })
 
+    @Patch("/", photo.single("img"))
+    public async Hello(request: Request, response: Response): Promise<Response> {
         try {
             return response.status(200).json("Hello World :)");
         } catch (error: any) {
