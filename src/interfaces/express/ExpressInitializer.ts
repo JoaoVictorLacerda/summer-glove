@@ -3,7 +3,6 @@ import {printError, printInfo} from "../../application/util/loggerUtil";
 import ExpressInformationCore from "../../application/core/ExpressInformationCore";
 import {LoggerConfigTypes} from "../types/LoggerConfigTypes";
 import LoggerInformationCore from "../../application/core/LoggerInformationCore";
-import SwaggerInformationCore from "../../application/core/SwaggerInformationCore";
 import DependenceInject from "../../application/core/DependenceInject";
 
 type RouteConfig = {

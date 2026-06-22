@@ -36,5 +36,6 @@ export { default as Title }from "./interfaces/swagger/apiConfiguration/Title";
 export { default as Version }from "./interfaces/swagger/apiConfiguration/Version";
 export { default as Theme} from "./interfaces/swagger/apiConfiguration/Theme";
 export { default as FormData } from "./interfaces/swagger/httpRequest/FormData";
+export { default as FormDataV2 } from "./interfaces/swagger/httpRequest/FormDataV2";
 export { FormDataTypes } from "./interfaces/types/FormDataTypes";
 export { default as ThemesType } from "./interfaces/swagger/themes/ThemesType";

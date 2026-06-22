@@ -1,10 +1,10 @@
 import Express, {json} from "express";
 import {
     ApiDefaultPath,
+    AuthType,
     Description,
     ExpressInitializer,
     GlobalAuth,
-    AuthType,
     LoggerConfigTypes,
     SwaggerEndpoint,
     SwaggerInitializer,
@@ -15,6 +15,7 @@ import {
 } from "../src/index";
 import MyController from "./Controller";
 import StartControllers from "../src/interfaces/summer/ecosystem/StartControllers";
+
 @SwaggerInitializer
 @SwaggerEndpoint("/doc")
 @Description("API TEST")

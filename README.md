@@ -82,6 +82,8 @@ All context decorators (@Repository, @Service, @Component, @Configuration) recei
 * **@RequireAuth** - Tells swagger that the route is protected by authentication
 * **@ParamPath** - Adds a ParamPath as a request object | Object
 * **@FormData** - Adds a FormData as a request objet | Object. Utilize *FormDataTypes* for grant types
+* **@FormDataV2** - Adds a FormData as a request objet | Object. Utilize *FormDataTypes* for grant types | You can pass examples in this version
+
 * **@Header** - Adds a Header as a request objet | object
 * **@Query** - Adds a Query as a request objet | object
 *
@@ -261,6 +263,34 @@ export default class MyController2 {
     public createProfile(request: Request, response: Response): Promise<Response> {
         //... implementation
     }
+
+  @StatusResponse(200)// if you dont pass description, summer-glove add for you 
+  @StatusResponse(400)// if you dont pass description, summer-glove add for you 
+  @FormDataV2({
+    img: {
+      type: FormDataTypes.FILE,
+      example: "Insert a image here"
+    },
+    name: {
+      type: FormDataTypes.STRING,
+      example: "Jhon"
+    },
+    rules:{
+      type: FormDataTypes.ARRAY,
+      //example: "CREATOR | READER" If not passed, it won't show anything in the swagger.
+    },
+    age: {
+      type: FormDataTypes.NUMBER,
+    },
+    isMarried: {
+      type: FormDataTypes.BOOLEAN,
+    }
+  })
+  // Default = "/" 
+  @Post("/create-profile2") // It is important to put the Http Method Decorator as the first configuration.
+  public createProfile2(request: Request, response: Response): Promise<Response> {
+    //... implementation
+  }
 }
 ```
 ```javascript

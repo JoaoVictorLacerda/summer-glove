@@ -1,4 +1,4 @@
-import { Express } from "express";
+import {Express} from "express";
 import App from "./App";
 
 class Server {
