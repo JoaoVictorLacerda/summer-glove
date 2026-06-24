@@ -7,8 +7,6 @@ export default function Injectable(objectName?: string) {
     return function (target: any, propertyKey: string) {
         const key = objectName || propertyKey
         const object = DependenceInject.getInstance().getObjectConfig().objects[key.toUpperCase()];
-        const test = DependenceInject.getInstance();
-        console.log(test)
         if(!object){
             LoggerInformationCore.getInstance().getObjectConfig().loggersQueue.push({
                 message: `The propertyKey [${propertyKey}] was not injected. The key [${propertyKey}] you entered did not match the instantiated key`,
