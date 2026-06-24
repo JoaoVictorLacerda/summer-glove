@@ -9,7 +9,8 @@ export default function makeFormDataV2Doc(params: any) {
 
         const paramPath = {
             "name": key,
-            "example": formData.example,
+            "default": formData.example,
+            // "example": formData.example,
             "in": "formData",
             "type": formData.type,
         }

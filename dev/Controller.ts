@@ -15,6 +15,7 @@ export default class MyController {
     @FormDataV2({
         dev: {
             type: FormDataTypes.STRING,
+            example: 1212
         },
         img: {
             type: FormDataTypes.FILE,
@@ -24,6 +25,7 @@ export default class MyController {
     @Patch("/", photo.single("img"))
     public async Hello(request: Request, response: Response): Promise<Response> {
         try {
+            const {dev} = request.body;
             return response.status(200).json("Hello World :)");
         } catch (error: any) {
             return response.status(400).json(error.message);

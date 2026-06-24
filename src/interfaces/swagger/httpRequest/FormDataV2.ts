@@ -5,7 +5,7 @@ export default function FormDataV2(
     formData: {
         [key: string]:{
             type: FormDataTypes,
-            example?: string
+            example?: any
     }}){
 
     return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
